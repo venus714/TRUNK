@@ -1,5 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import Navbar from '../navbar/Navbar';
+import Home from '../home/Home';
+import About from '../about/About';
+import Login from '../login/Login';
+import Footer from '../footer/Footer';
+import Footer from '../footer/Footer';
+import axios from axios;
+
 
 function App() {
   return (
