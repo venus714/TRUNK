@@ -1,31 +1,84 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 import Home from '../home/Home';
 import About from '../about/About';
 import Login from '../login/Login';
 import Footer from '../footer/Footer';
-import Footer from '../footer/Footer';
-import axios from axios;
-
+import Signup from '../signup/Signup';
+import axios from 'axios';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [admin, setAdmin] = useState(false);
+
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    axios
+      .post('will put api ', {
+        email: values.email,
+        password: values.password,
+      })
+      .then((res) => {
+        if (res.status === 202) {
+          const { jwt, user } = res.data;
+
+          localStorage.setItem('token', jwt);
+          localStorage.setItem('user_id', user.id);
+          localStorage.setItem('admin', user.admin);
+
+          setUserId(user.id);
+          setAdmin(user.admin);
+          setIsAuthenticated(true);
+
+          // Redirect user after successful login
+          window.location.href = '/';
+          console.log('Successfully logged in');
+        } else {
+          alert('Failed to Login');
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          setError(error.response.data.error || 'Invalid credentials.');
+        } else {
+          setError('An error occurred. Please try again later.');
+        }
+        console.error(error);
+      });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} setAdmin={setAdmin} />
+      <Routes>
+        <Route
+          path="/"
+          element={<Home setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} admin={admin} />}
+        />
+        <Route path="/about" element={<About />} />
+        <Route
+          path="/login"
+          element={
+            <Login
+              error={error}
+              setIsAuthenticated={setIsAuthenticated}
+              setValues={setValues}
+              values={values}
+              handleLogin={handleLogin}
+            />
+          }
+        />
+        <Route path="/signup" element={<Signup setError={setError} />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
