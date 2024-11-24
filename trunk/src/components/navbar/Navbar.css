@@ -1,0 +1,91 @@
+/* Navbar container styles */
+nav {
+    background: #141e30; /* Dark background */
+    height: 80px;
+    display: flex;
+    justify-content: space-between; /* Space between logo and links */
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 999; /* Keep navbar above other elements */
+    padding: 0 20px; /* Add some horizontal padding */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Navbar links container */
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Individual link styling */
+  nav li {
+    margin-right: 15px; /* Spacing between links */
+    padding: 0.5rem;
+  }
+  
+  /* Links appearance */
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  /* Hover effect for links */
+  nav a:hover {
+    color: rgb(240, 63, 10); /* Orange highlight on hover */
+  }
+  
+  /* Login link specific styling */
+  #login {
+    margin-left: 50px;
+  }
+  
+  /* Animations for fade transitions */
+  .fade-enter {
+    opacity: 0;
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+  }
+  
+  .fade-exit {
+    opacity: 1;
+  }
+  
+  .fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+  }
+  
+  /* Logo container styling */
+  .logo-container {
+    height: 50px; /* Adjust height to fit your logo */
+  }
+  
+  .logo-container img {
+    height: 100%;
+    max-width: 100%;
+  }
+  
+  /* Navbar logo specific styling */
+  .navbar img {
+    height: 74px;
+    margin-right: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    object-fit: contain; /* Prevent distortion of logo */
+  }
+  
+  /* Ensure consistent logo padding */
+  .logo {
+    padding: 15px !important;
+  }
+  

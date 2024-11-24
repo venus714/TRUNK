@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from '../navbar/Navbar';
 import Home from '../home/Home';
 import About from '../about/About';
 import Login from '../login/Login';
 import Footer from '../footer/Footer';
-import Signup from '../signup/Signup';
+import Signup from '../signup/Sighnup'; // Fixed the typo here
 import axios from 'axios';
 
 function App() {
@@ -19,10 +19,14 @@ function App() {
     password: '',
   });
 
+  const navigate = useNavigate(); // useNavigate hook for programmatic navigation
+
   const handleLogin = (event) => {
     event.preventDefault();
+
+    // Replace 'YOUR_API_URL' with your actual login API endpoint
     axios
-      .post('will put api ', {
+      .post('YOUR_API_URL', {
         email: values.email,
         password: values.password,
       })
@@ -38,8 +42,8 @@ function App() {
           setAdmin(user.admin);
           setIsAuthenticated(true);
 
-          // Redirect user after successful login
-          window.location.href = '/';
+          // Redirect user after successful login using useNavigate
+          navigate('/');
           console.log('Successfully logged in');
         } else {
           alert('Failed to Login');
@@ -57,7 +61,11 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} setAdmin={setAdmin} />
+      <Navbar
+        setIsAuthenticated={setIsAuthenticated}
+        isAuthenticated={isAuthenticated}
+        setAdmin={setAdmin}
+      />
       <Routes>
         <Route
           path="/"
